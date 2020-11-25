@@ -13,6 +13,7 @@ SPIDER_MODULES = ['p.spiders']
 NEWSPIDER_MODULE = 'p.spiders'
 
 
+MONGO_URI = 'mongodb://%s:%s@localhost:27017'
 # Crawl responsibly by identifying yourself (and your website) on the user-agent
 #USER_AGENT = 'p (+http://www.yourdomain.com)'
 
@@ -22,7 +23,7 @@ ROBOTSTXT_OBEY = True
 # Configure maximum concurrent requests performed by Scrapy (default: 16)
 #CONCURRENT_REQUESTS = 32
 
-LOG_LEVEL = 'INFO'
+LOG_LEVEL = 'DEBUG'
 # Configure a delay for requests for the same website (default: 0)
 # See https://docs.scrapy.org/en/latest/topics/settings.html#download-delay
 # See also autothrottle settings and docs

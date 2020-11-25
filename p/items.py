@@ -5,8 +5,23 @@
 
 import scrapy
 
+class BookItem(scrapy.Item):
+    id = scrapy.Field()
+    _id = scrapy.Field()
+    ca_id = scrapy.Field()
+    title = scrapy.Field()
+    author = scrapy.Field()
+    desc = scrapy.Field()
+    last_updated = scrapy.Field()
+    chapters = scrapy.Field()
+    image = scrapy.Field()
+    collection = 'book'
 
-class PItem(scrapy.Item):
-    # define the fields for your item here like:
-    # name = scrapy.Field()
-    pass
+class ChapterItem(scrapy.Item):
+    _id = scrapy.Field()
+    id = scrapy.Field()
+    book_full_id = scrapy.Field()
+    title = scrapy.Field()
+    link = scrapy.Field()
+    content = scrapy.Field()
+    collection = 'chapter'

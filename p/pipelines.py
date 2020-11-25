@@ -6,12 +6,8 @@
 
 # useful for handling different item types with a single interface
 from itemadapter import ItemAdapter
-
-
-class PPipeline:
-    def process_item(self, item, spider):
-        return item
 import pymongo
+import os
 
 class MongoPipeline(object):
     def __init__(self, mongo_uri, mongo_db):
@@ -26,7 +22,7 @@ class MongoPipeline(object):
         )
 
     def open_spider(self, spider):
-        self.client = pymongo.MongoClient(self.mongo_uri)
+        self.client = pymongo.MongoClient(self.mongo_uri % (os.getenv('DB_USERNAME'), os.getenv('DB_PASSWORD')))
         self.db = self.client[self.mongo_db]
 
     def process_item(self, item, spider):

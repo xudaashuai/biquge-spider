@@ -1,33 +1,11 @@
 import scrapy
 import pymongo
 import re
+import os
 from scrapy.loader import ItemLoader
 from datetime import datetime
-
-client = pymongo.MongoClient(host='localhost', port=27017)
-
-
-class Book(scrapy.Item):
-    id = scrapy.Field()
-    _id = scrapy.Field()
-    ca_id = scrapy.Field()
-    title = scrapy.Field()
-    author = scrapy.Field()
-    desc = scrapy.Field()
-    last_updated = scrapy.Field()
-    chapters = scrapy.Field()
-    image = scrapy.Field()
-    collection = 'book'
-
-
-class Chapter(scrapy.Item):
-    _id = scrapy.Field()
-    id = scrapy.Field()
-    book_full_id = scrapy.Field()
-    title = scrapy.Field()
-    link = scrapy.Field()
-    content = scrapy.Field()
-    collection = 'chapter'
+from p.items import BookItem
+from p.items import ChapterItem
 
 
 class MainspiderSpider(scrapy.Spider):
@@ -57,7 +35,7 @@ class MainspiderSpider(scrapy.Spider):
             'id': x.attrib['href'].split('/')[2].split('.')[0],
             "title": x.xpath('text()').extract()[0]
         }, response.xpath('//*[@id="list"]/dl/dt[2]/following::dd/a')))
-        yield Book({
+        yield BookItem({
             '_id': book_id,
             'ca_id': ca_id,
             'id': book_id,
@@ -73,7 +51,7 @@ class MainspiderSpider(scrapy.Spider):
 
     def parse_chapter(self, response):
         content = response.css('#content::text').extract()
-        yield Chapter({
+        yield ChapterItem({
             '_id': response.meta['id'],
             'link': response.meta['link'],
             'book_full_id': response.meta['book_full_id'],
